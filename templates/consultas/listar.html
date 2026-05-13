@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Consultas Médicas</h2>
+
+<a href="/consultas/agregar" class="btn">
+Nueva Consulta
+</a>
+
+<br><br>
+
+<table>
+
+<tr>
+<th>Fecha</th>
+<th>Diagnóstico</th>
+<th>Tratamiento</th>
+<th>Médico</th>
+<th>Paciente</th>
+</tr>
+
+{% for c in consultas %}
+
+<tr>
+
+<td>{{ c.fecha }}</td>
+<td>{{ c.diagnostico }}</td>
+<td>{{ c.tratamiento }}</td>
+<td>{{ c.medico.nombre }}</td>
+<td>{{ c.paciente.nombre }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

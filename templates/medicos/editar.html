@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Editar Médico</h2>
+
+<form method="POST">
+
+<label>Nombre:</label>
+<input type="text" name="nombre" value="{{ medico.nombre }}" required>
+
+<br><br>
+
+<label>Especialidad:</label>
+<input type="text" name="especialidad" value="{{ medico.especialidad }}" required>
+
+<br><br>
+
+<label>Teléfono:</label>
+<input type="text" name="telefono" value="{{ medico.telefono }}" required>
+
+<br><br>
+
+<label>Correo:</label>
+<input type="email" name="correo" value="{{ medico.correo }}" required>
+
+<br><br>
+
+<button type="submit">
+Actualizar
+</button>
+
+</form>
+
+{% endblock %}

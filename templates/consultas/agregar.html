@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Nueva Consulta</h2>
+
+<form method="POST">
+
+    <label>Fecha:</label>
+    <input type="date" name="fecha" required>
+
+    <br><br>
+
+    <label>Diagnóstico:</label>
+    <input type="text" name="diagnostico" required>
+
+    <br><br>
+
+    <label>Tratamiento:</label>
+    <input type="text" name="tratamiento" required>
+
+    <br><br>
+
+    <label>Médico:</label>
+
+    <select name="id_medico" required>
+
+        {% for m in medicos %}
+
+        <option value="{{ m.id_medico }}">
+            {{ m.nombre }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <label>Paciente:</label>
+
+    <select name="id_paciente" required>
+
+        {% for p in pacientes %}
+
+        <option value="{{ p.id_paciente }}">
+            {{ p.nombre }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Guardar Consulta
+    </button>
+
+</form>
+
+{% endblock %}

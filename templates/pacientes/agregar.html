@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Agregar Paciente</h2>
+
+<form method="POST">
+
+<label>Nombre:</label>
+<input type="text" name="nombre" required>
+
+<br><br>
+
+<label>Edad:</label>
+<input type="number" name="edad" required>
+
+<br><br>
+
+<label>Dirección:</label>
+<input type="text" name="direccion" required>
+
+<br><br>
+
+<label>Teléfono:</label>
+<input type="text" name="telefono" required>
+
+<br><br>
+
+<button type="submit">
+Guardar
+</button>
+
+</form>
+
+{% endblock %}

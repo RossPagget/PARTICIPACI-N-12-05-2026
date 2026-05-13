@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Lista de Médicos</h2>
+
+<a href="/medicos/agregar" class="btn">
+    Nuevo Médico
+</a>
+
+<br><br>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Especialidad</th>
+    <th>Teléfono</th>
+    <th>Correo</th>
+    <th>Acciones</th>
+</tr>
+
+{% for m in medicos %}
+
+<tr>
+
+<td>{{ m.id_medico }}</td>
+<td>{{ m.nombre }}</td>
+<td>{{ m.especialidad }}</td>
+<td>{{ m.telefono }}</td>
+<td>{{ m.correo }}</td>
+
+<td>
+
+<a href="/medicos/editar/{{m.id_medico}}">
+Editar
+</a>
+
+|
+
+<a href="/medicos/eliminar/{{m.id_medico}}">
+Eliminar
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}
