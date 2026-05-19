@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Médico - Gestión Clínica{% endblock %}
+
+{% block content %}
+
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-3 me-3">
+        <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Confirmar Eliminación</h2>
+        <p class="text-muted mb-0">Esta acción dará de baja al profesional del sistema.</p>
+    </div>
+</div>
+
+<div class="card border-start border-danger border-4 shadow-sm rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <h5 class="card-title text-dark fw-bold mb-3">Registro seleccionado para eliminación</h5>
+        
+        <div class="bg-light p-3 rounded-3 mb-4 border">
+            <div class="row g-2">
+                <div class="col-sm-4 text-muted fw-semibold">ID Médico:</div>
+                <div class="col-sm-8 fw-bold text-dark">{{ medico.id_medico }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Nombre:</div>
+                <div class="col-sm-8 text-dark">{{ medico.nombre }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Especialidad:</div>
+                <div class="col-sm-8">{{ medico.especialidad }}</div>
+            </div>
+        </div>
+
+        <!-- El formulario intercepta el envío con JavaScript nativo -->
+        <form method="POST" onsubmit="return confirm('¿Está segura de que desea eliminar el registro del Dr(a). {{ medico.nombre }} permanentemente?');">
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/medicos" class="btn btn-light px-4 border">
+                    <i class="fa-solid fa-arrow-left me-2"></i>Regresar a la lista
+                </a>
+                <button type="submit" class="btn btn-danger shadow-sm px-4">
+                    <i class="fa-solid fa-trash-can me-2"></i>Eliminar Registro
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

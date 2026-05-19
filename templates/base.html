@@ -2,63 +2,152 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Clínica Médica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Clínica Médica{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (Iconos) CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
+    <!-- Estilos Personalizados para un acabado sobrio y elegante -->
     <style>
-
-        body{
-            font-family: Arial;
-            margin:40px;
-            background:#f4f4f4;
+        :root {
+            --primary-color: #1e3d59; /* Azul oscuro empresarial */
+            --secondary-color: #17b978; /* Verde médico suave para detalles */
+            --bg-light: #f8f9fa;
         }
 
-        nav a{
-            margin-right:15px;
-            text-decoration:none;
-            font-weight:bold;
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        table{
-            width:100%;
-            border-collapse:collapse;
-            background:white;
+        /* Navbar personalizado */
+        .navbar-custom {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        th, td{
-            border:1px solid #ccc;
-            padding:10px;
+        .navbar-custom .navbar-brand {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        th{
-            background:#007bff;
-            color:white;
+        .navbar-custom .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 4px;
         }
 
-        .btn{
-            padding:8px;
-            background:#007bff;
-            color:white;
-            text-decoration:none;
+        .navbar-custom .nav-link:hover, 
+        .navbar-custom .nav-link.active {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
+        .navbar-custom .nav-link i {
+            margin-right: 6px;
+            color: var(--secondary-color);
+        }
+
+        /* Contenedor principal */
+        .main-container {
+            flex: 1;
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+        }
+
+        /* Estilos globales sugeridos para las vistas hijas (Tablas y Botones) */
+        .table-custom {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .table-custom th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-custom-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-custom-primary:hover {
+            background-color: #13293d;
+            color: white;
+        }
+
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid #e3e6f0;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
     </style>
-
 </head>
 <body>
-
-    <h1>Sistema de Gestión Clínica</h1>
-
-    <nav>
-        <a href="/">Inicio</a>
-        <a href="/medicos">Médicos</a>
-        <a href="/pacientes">Pacientes</a>
-        <a href="/consultas">Consultas</a>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fa-solid fa-house-medical me-2"></i>Clínica Medica "Santa Teresa de Calcutta"
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fa-solid fa-chart-pie"></i>Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/medicos"><i class="fa-solid fa-user-doctor"></i>Médicos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pacientes"><i class="fa-solid fa-hospital-user"></i>Pacientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/consultas"><i class="fa-solid fa-notes-medical"></i>Consultas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <hr>
+    <!-- Contenido Principal -->
+    <main class="container main-container">
+        <div class="row">
+            <div class="col-12">
+                {% block content %}
+                <!-- Aquí se inyectará el contenido de las otras vistas -->
+                {% endblock %}
+            </div>
+        </div>
+    </main>
 
-    {% block content %}
-    {% endblock %}
+    <!-- Pie de página discreto -->
+    <footer class="text-center">
+        <div class="container">
+            <span>&copy; 2026 Sistema de Gestión Clínica. Todos los derechos reservados.</span>
+        </div>
+    </footer>
 
+<!-- Asegúrate de tener este script al final de tu base.html -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

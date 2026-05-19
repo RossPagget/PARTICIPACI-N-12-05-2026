@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Consulta - Gestión Clínica{% endblock %}
+
+{% block content %}
+
+<!-- Bloque superior de advertencia idéntico al de médicos -->
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-3 me-3">
+        <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Confirmar Eliminación</h2>
+        <p class="text-muted mb-0">Esta acción dará de baja la consulta del sistema.</p>
+    </div>
+</div>
+
+<!-- Tarjeta de datos con el ancho exacto del módulo de médicos -->
+<div class="card border-start border-danger border-4 shadow-sm rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <h5 class="card-title text-dark fw-bold mb-3">Registro seleccionado para eliminación</h5>
+        
+        <!-- Contenedor gris de datos específicos de la consulta -->
+        <div class="bg-light p-3 rounded-3 mb-4 border">
+            <div class="row g-2">
+                <div class="col-sm-4 text-muted fw-semibold">ID Consulta:</div>
+                <div class="col-sm-8 fw-bold text-dark">{{ consulta.id_consulta }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Fecha:</div>
+                <div class="col-sm-8 text-dark">{{ consulta.fecha }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Médico:</div>
+                <div class="col-sm-8 text-dark">{{ consulta.medico.nombre }}</div>
+
+                <div class="col-sm-4 text-muted fw-semibold">Paciente:</div>
+                <div class="col-sm-8 text-dark">{{ consulta.paciente.nombre }}</div>
+
+                <div class="col-sm-4 text-muted fw-semibold">Diagnóstico:</div>
+                <div class="col-sm-8 text-secondary text-wrap">{{ consulta.diagnostico }}</div>
+            </div>
+        </div>
+
+        <!-- Formulario con la misma lógica de intercepción nativa de JS -->
+        <form method="POST" onsubmit="return confirm('¿Está segura de que desea eliminar el registro de la consulta del paciente {{ consulta.paciente.nombre }} permanentemente?');">
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/consultas" class="btn btn-light px-4 border">
+                    <i class="fa-solid fa-arrow-left me-2"></i>Regresar a la lista
+                </a>
+                <button type="submit" class="btn btn-danger shadow-sm px-4">
+                    <i class="fa-solid fa-trash-can me-2"></i>Eliminar Registro
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -2,53 +2,56 @@
 
 {% block content %}
 
-<h2>Lista de Médicos</h2>
+<!-- Se cambió a una cabecera estilizada con Bootstrap -->
+<h2 class="mb-4 fw-bold text-dark">Médicos</h2>
 
-<a href="/medicos/agregar" class="btn">
-    Nuevo Médico
+<!-- Se reemplazó la clase .btn básica por las clases nativas de Bootstrap y se añadió un ícono -->
+<a href="/medicos/agregar" class="btn btn-custom-primary shadow-sm mb-4">
+    <i class="fa-solid fa-plus me-2"></i>Nuevo Médico
 </a>
 
-<br><br>
-
-<table>
-
-<tr>
-    <th>ID</th>
-    <th>Nombre</th>
-    <th>Especialidad</th>
-    <th>Teléfono</th>
-    <th>Correo</th>
-    <th>Acciones</th>
-</tr>
-
-{% for m in medicos %}
-
-<tr>
-
-<td>{{ m.id_medico }}</td>
-<td>{{ m.nombre }}</td>
-<td>{{ m.especialidad }}</td>
-<td>{{ m.telefono }}</td>
-<td>{{ m.correo }}</td>
-
-<td>
-
-<a href="/medicos/editar/{{m.id_medico}}">
-Editar
-</a>
-
-|
-
-<a href="/medicos/eliminar/{{m.id_medico}}">
-Eliminar
-</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
+<!-- Se eliminaron los <br><br> y se envolvió la tabla en un contenedor responsivo -->
+<div class="table-responsive card border-0 shadow-sm rounded-3">
+    <!-- Se añadieron las clases de Bootstrap para estilizar la tabla -->
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <!-- Se aplica la clase personalizada de la base para el fondo oscuro -->
+            <tr class="table-custom text-white">
+                <th class="ps-3">ID</th>
+                <th>Nombre</th>
+                <th>Especialidad</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th class="text-center pe-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in medicos %}
+            <tr>
+                <td class="ps-3 fw-bold text-secondary">{{ m.id_medico }}</td>
+                <td class="fw-semibold">{{ m.nombre }}</td>
+                <td>
+                    <span class="badge bg-light text-primary border border-primary-subtle px-2 py-1.5">
+                        <i class="fa-solid fa-user-md me-1"></i>{{ m.especialidad }}
+                    </span>
+                </td>
+                <td><i class="fa-solid fa-phone text-muted me-2 small"></i>{{ m.telefono }}</td>
+                <td><i class="fa-solid fa-envelope text-muted me-2 small"></i>{{ m.correo }}</td>
+                <td class="text-center pe-3">
+                    <!-- Se transformaron tus enlaces de texto en botones limpios con íconos -->
+                    <div class="btn-group" role="group">
+                        <a href="/medicos/editar/{{m.id_medico}}" class="btn btn-sm btn-outline-primary px-3">
+                            <i class="fa-solid fa-pen-to-square me-1"></i> Editar
+                        </a>
+                        <a href="/medicos/eliminar/{{m.id_medico}}" class="btn btn-sm btn-outline-danger px-3">
+                            <i class="fa-solid fa-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

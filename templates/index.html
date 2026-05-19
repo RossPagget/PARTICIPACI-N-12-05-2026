@@ -1,11 +1,101 @@
 {% extends 'base.html' %}
 
+{% block title %}Inicio - Gestión Clínica{% endblock %}
+
 {% block content %}
+<div class="container my-4">
+    <!-- Encabezado Principal -->
+    <div class="py-3 mb-4 border-bottom text-center">
+        <div class="container">
+            <h2 class="fw-bold text-dark mb-2">Sistema de Gestión Clínica</h2>
+            <p class="col-md-8 mx-auto text-muted mb-1">
+                Plataforma institucional diseñada para optimizar, centralizar y resguardar la información médica y el historial clínico de nuestros pacientes.
+            </p>
+        </div>
+    </div>
 
-<h2>Bienvenido al Sistema de Clínica Médica</h2>
+    <!-- Carrusel de Imágenes Profesionales -->
+    <div id="clinicCarousel" class="carousel slide mb-5 shadow-sm rounded overflow-hidden" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQfCCiKl0U9V8puqzqGTTCEkElNRiCcvfTgbh8w5haP5GVAk8YRe3hKhxlKEykE78-Qz6iS7QosjMunxZQ" class="d-block w-100" alt="Instalaciones de la Clínica" style="height: 380px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                    <h5>Infraestructura Moderna</h5>
+                    <p>Entornos tecnológicos óptimos para la administración de datos clínicos.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQBCypSUeb7Xa9YGeGu3HGkZ7QnTa7pptcs5RWihXxtXeQvrTfB3uv3wmGgsQU5Qng2P66aZEGjpfqSp38" class="d-block w-100" alt="Consulta Médica Profesional" style="height: 380px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                    <h5>Atención Integral</h5>
+                    <p>Seguimiento estructurado de diagnósticos, tratamientos y evolución del paciente.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#clinicCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#clinicCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
 
-<p>
-Sistema desarrollado con Flask y SQLAlchemy utilizando MVC.
-</p>
+    <!-- Sección: Sobre Nosotros -->
+    <div class="row align-items-center mb-5 g-4">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-sm p-4 bg-white">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 me-3">
+                            <i class="fa-solid fa-hospital fa-xl"></i>
+                        </div>
+                        <h3 class="card-title fw-bold text-dark mb-0">Sobre Nosotros</h3>
+                    </div>
+                    <p class="card-text text-secondary leading-relaxed">
+                        Somos un centro de salud comprometido con la excelencia médica y la innovación tecnológica. Nuestro sistema informático automatiza los procesos del modelo clásico hospitalario, permitiendo un puente de información fluido y seguro entre el personal médico y los pacientes. Nos enfocamos en la mejora continua y el manejo transparente de los expedientes para brindar una experiencia de atención médica armónica, estructurada y eficiente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Sección: Misión y Visión (Tarjetas Paralelas) -->
+    <div class="row g-4">
+        <!-- Tarjeta: Misión -->
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm bg-white">
+                <div class="card-body p-4">
+                    <div class="text-success mb-3">
+                        <div class="bg-success bg-opacity-10 text-success d-inline-block p-3 rounded-3">
+                            <i class="fa-solid fa-bullseye fa-2x"></i>
+                        </div>
+                    </div>
+                    <h4 class="card-title fw-bold text-dark mb-3">Nuestra Misión</h4>
+                    <p class="card-text text-muted">
+                        Proveer servicios de salud integrales y de alta calidad mediante un equipo profesional ético y el uso de herramientas de software de vanguardia, garantizando la precisión en el registro clínico, la calidez humana en la atención y la seguridad en el tratamiento de cada uno de nuestros pacientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta: Visión -->
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm bg-white">
+                <div class="card-body p-4">
+                    <div class="text-warning mb-3">
+                        <div class="bg-warning bg-opacity-10 text-warning d-inline-block p-3 rounded-3">
+                            <i class="fa-solid fa-eye fa-2x"></i>
+                        </div>
+                    </div>
+                    <h4 class="card-title fw-bold text-dark mb-3">Nuestra Visión</h4>
+                    <p class="card-text text-muted">
+                        Ser reconocidos como el centro médico líder en innovación y transformación digital en la región, distinguidos por la excelencia de nuestros profesionales, la optimización de los tiempos de atención mediante procesos automatizados y un modelo de gestión clínica que sea referente de calidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

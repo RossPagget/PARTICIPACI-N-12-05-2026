@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Historial Clínico - {{ paciente.nombre }}{% endblock %}
+
+{% block content %}
+
+<!-- Cabecera de la Sección -->
+<div class="d-flex align-items-center mb-4 justify-content-between">
+    <div class="d-flex align-items-center">
+        <div class="bg-info bg-opacity-10 text-info p-3 rounded-3 me-3">
+            <i class="fa-solid fa-folder-folder-medical fa-2x"></i>
+        </div>
+        <div>
+            <h2 class="mb-0 fw-bold text-dark">Historial Médico</h2>
+            <p class="text-muted mb-0">Expediente clínico completo y registro de atenciones.</p>
+        </div>
+    </div>
+    <a href="/pacientes" class="btn btn-light border px-3 shadow-sm">
+        <i class="fa-solid fa-arrow-left me-2"></i>Volver a Pacientes
+    </a>
+</div>
+
+<!-- Ficha de Datos Personales del Paciente -->
+<div class="card border-0 shadow-sm rounded-3 mb-4 bg-white">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center mb-3">
+            <div class="avatar bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                <i class="fa-solid fa-user-injured fa-lg"></i>
+            </div>
+            <div>
+                <h4 class="fw-bold text-dark mb-0">{{ paciente.nombre }}</h4>
+                <span class="badge bg-light text-dark border mt-1">ID Paciente: #{{ paciente.id_paciente }}</span>
+            </div>
+        </div>
+        
+        <hr class="text-muted opacity-25">
+        
+        <div class="row g-3">
+            <div class="col-md-3 col-sm-6">
+                <small class="text-muted d-block fw-semibold text-uppercase">Edad</small>
+                <span class="text-dark fw-medium"><i class="fa-solid fa-cake-candles text-muted me-2"></i>{{ paciente.edad }} años</span>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <small class="text-muted d-block fw-semibold text-uppercase">Teléfono</small>
+                <span class="text-dark fw-medium"><i class="fa-solid fa-phone text-muted me-2"></i>{{ paciente.telefono }}</span>
+            </div>
+            <div class="col-md-6">
+                <small class="text-muted d-block fw-semibold text-uppercase">Dirección</small>
+                <span class="text-dark fw-medium"><i class="fa-solid fa-location-dot text-muted me-2"></i>{{ paciente.direccion }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cronología de Consultas / Fichas Clínicas -->
+<h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-history me-2 text-secondary"></i>Línea de Consultas Registradas</h4>
+
+<Timeline>
+    {% for c in consultas %}
+    <TimelineEvent title="Consulta Médica - Atendido por Dr(a). {{ c.medico.nombre }}" time="{{ c.fecha }}">
+        
+        <div class="row g-3 mt-1">
+            <div class="col-md-6">
+                <div class="p-3 rounded-3 bg-light border-start border-primary border-3 h-100">
+                    <span class="d-block fw-bold text-secondary small text-uppercase mb-1">
+                        <i class="fa-solid fa-notes-medical me-1 text-primary"></i> Diagnóstico
+                    </span>
+                    <p class="mb-0 text-dark small" style="white-space: pre-line;">{{ c.diagnostico }}</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="p-3 rounded-3 bg-light border-start border-success border-3 h-100">
+                    <span class="d-block fw-bold text-secondary small text-uppercase mb-1">
+                        <i class="fa-solid fa-capsules me-1 text-success"></i> Tratamiento Prescrito
+                    </span>
+                    <p class="mb-0 text-dark small" style="white-space: pre-line;">{{ c.tratamiento }}</p>
+                </div>
+            </div>
+        </div>
+        
+    </TimelineEvent>
+    {% else %}
+    <!-- Si el paciente no cuenta con consultas médicas previas -->
+    <div class="card border-0 shadow-sm p-5 text-center text-muted rounded-3">
+        <i class="fa-solid fa-comment-medical fa-3x mb-3 text-secondary opacity-50"></i>
+        <h5 class="fw-semibold">Sin visitas previas</h5>
+        <p class="small mb-0">Este paciente aún no registra consultas médicas en nuestro centro.</p>
+        <div class="mt-3">
+            <a href="/consultas/agregar" class="btn btn-sm btn-custom-primary">
+                <i class="fa-solid fa-plus me-1"></i> Agendar Nueva Consulta
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</Timeline>
+
+{% endblock %}

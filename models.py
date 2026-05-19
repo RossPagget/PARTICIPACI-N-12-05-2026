@@ -2,9 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# =========================
-# TABLA MEDICOS
-# =========================
+# TB MEDICOS
 class Medico(db.Model):
     __tablename__ = 'medicos'
 
@@ -16,9 +14,7 @@ class Medico(db.Model):
 
     consultas = db.relationship('Consulta', backref='medico', lazy=True)
 
-# =========================
-# TABLA PACIENTES
-# =========================
+# TB PACIENTES
 class Paciente(db.Model):
     __tablename__ = 'pacientes'
 
@@ -30,9 +26,7 @@ class Paciente(db.Model):
 
     consultas = db.relationship('Consulta', backref='paciente', lazy=True)
 
-# =========================
-# TABLA CONSULTAS
-# =========================
+# TB CONSULTAS
 class Consulta(db.Model):
     __tablename__ = 'consultas'
 

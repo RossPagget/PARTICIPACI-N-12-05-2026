@@ -1,39 +1,155 @@
 {% extends 'base.html' %}
 
+{% block title %}Lista de Pacientes - Gestión Clínica{% endblock %}
+
 {% block content %}
 
-<h2>Lista de Pacientes</h2>
+<!-- Cabecera estilizada idéntica a la de médicos -->
+<div class="d-flex align-items-center mb-4 justify-content-between flex-wrap gap-3">
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Pacientes</h2>
+        <p class="text-muted mb-0">Gestione la información, datos de contacto e historial clínico de los pacientes.</p>
+    </div>
+    <!-- Botón principal directo con diseño estilizado e ícono -->
+    <a href="/pacientes/agregar" class="btn btn-custom-primary shadow-sm">
+        <i class="fa-solid fa-plus me-2"></i>Nuevo Paciente
+    </a>
+</div>
 
-<a href="/pacientes/agregar" class="btn">
-Nuevo Paciente
-</a>
+<!-- Barra de búsqueda / Filtro dinámico -->
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-3">
+        <div class="input-group">
+            <span class="input-group-text bg-light border-end-0 text-muted">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input type="text" id="buscarPaciente" class="form-control bg-light border-start-0 ps-0" placeholder="Buscar paciente por nombre o dirección..." onkeyup="filtrarTabla()">
+        </div>
+    </div>
+</div>
 
-<br><br>
+<!-- Contenedor responsivo de tarjeta sin bordes y con sombra suave -->
+<div class="table-responsive card border-0 shadow-sm rounded-3">
+    <!-- Tabla con efectos de hover y alineación centralizada -->
+    <table class="table table-hover align-middle mb-0" id="tablaPacientes">
+        <thead>
+            <!-- Cabecera oscura unificada con la clase table-custom -->
+            <tr class="table-custom text-white">
+                <th class="ps-3">ID</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th class="text-center pe-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pacientes %}
+            <tr>
+                <!-- ID resaltado en negrita -->
+                <td class="ps-3 fw-bold text-secondary">{{ p.id_paciente }}</td>
+                
+                <!-- Nombre del paciente -->
+                <td class="fw-semibold nombre-paciente">{{ p.nombre }}</td>
+                
+                <!-- Edad estilizada con un pequeño badge neutro -->
+                <td>
+                    <span class="badge bg-light text-dark border px-2 py-1.5">
+                        <i class="fa-solid fa-cake-candles text-muted me-1 small"></i>{{ p.edad }} años
+                    </span>
+                </td>
+                
+                <!-- Dirección con ícono de mapa -->
+                <td class="direccion-paciente">
+                    <i class="fa-solid fa-location-dot text-muted me-2 small"></i>{{ p.direccion }}
+                </td>
+                
+                <!-- Teléfono con su ícono -->
+                <td>
+                    <i class="fa-solid fa-phone text-muted me-2 small"></i>{{ p.telefono }}
+                </td>
+                
+                <!-- Grupo de botones de acciones integrado con el Historial Clínico -->
+                <td class="text-center pe-3">
+                    <div class="btn-group" role="group" aria-label="Acciones de paciente">
+                        <!-- Botón de Historial Clínico -->
+                        <a href="/pacientes/historial/{{ p.id_paciente }}" class="btn btn-sm btn-outline-info px-3" title="Ver Historial Clínico">
+                            <i class="fa-solid fa-file-medical me-1"></i> Historial
+                        </a>
+                        <!-- Botón de Editar -->
+                        <a href="/pacientes/editar/{{ p.id_paciente }}" class="btn btn-sm btn-outline-primary px-3" title="Editar Información">
+                            <i class="fa-solid fa-pen-to-square me-1"></i> Editar
+                        </a>
+                        <!-- Botón de Eliminar (vía GET que procesará el formulario seguro de confirmación) -->
+                        <a href="/pacientes/eliminar/{{ p.id_paciente }}" class="btn btn-sm btn-outline-danger px-3" title="Dar de Baja">
+                            <i class="fa-solid fa-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <!-- Estado vacío por si no existen registros de pacientes -->
+            <tr id="filaVacia">
+                <td colspan="6" class="text-center text-muted py-5">
+                    <i class="fa-solid fa-folder-open fa-2x mb-2 text-secondary d-block"></i>
+                    No se registran pacientes en el sistema.
+                </td>
+            </tr>
+            {% endfor %}
+            
+            <!-- Fila oculta por defecto para búsquedas sin resultados -->
+            <tr id="sinResultados" style="display: none;">
+                <td colspan="6" class="text-center text-muted py-4">
+                    <i class="fa-solid fa-circle-exclamation fa-2x mb-2 text-warning d-block"></i>
+                    No se encontraron pacientes que coincidan con la búsqueda.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-<table>
+<!-- Script interactivo en Javascript puro para el filtro en tiempo real sin recargar la página -->
+<script>
+function filtrarTabla() {
+    const input = document.getElementById('buscarPaciente');
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById('tablaPacientes');
+    const tr = table.getElementsByTagName('tr');
+    let coincidencias = 0;
+    let filasDatos = 0;
 
-<tr>
-<th>ID</th>
-<th>Nombre</th>
-<th>Edad</th>
-<th>Dirección</th>
-<th>Teléfono</th>
-</tr>
+    // Empezamos en 1 para saltarnos los encabezados (th) de la tabla
+    for (let i = 1; i < tr.length; i++) {
+        // Evitamos procesar las filas especiales de control de la UI
+        if (tr[i].id === 'sinResultados' || tr[i].id === 'filaVacia') continue;
+        
+        filasDatos++;
+        const tdNombre = tr[i].getElementsByClassName('nombre-paciente')[0];
+        const tdDireccion = tr[i].getElementsByClassName('direccion-paciente')[0];
+        
+        if (tdNombre || tdDireccion) {
+            const textoNombre = tdNombre.textContent || tdNombre.innerText;
+            const textoDireccion = tdDireccion.textContent || tdDireccion.innerText;
+            
+            if (textoNombre.toLowerCase().indexOf(filter) > -1 || textoDireccion.toLowerCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+                coincidencias++;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
 
-{% for p in pacientes %}
-
-<tr>
-
-<td>{{ p.id_paciente }}</td>
-<td>{{ p.nombre }}</td>
-<td>{{ p.edad }}</td>
-<td>{{ p.direccion }}</td>
-<td>{{ p.telefono }}</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
+    // Manejo de la visualización del estado "Sin resultados"
+    const rowSinResultados = document.getElementById('sinResultados');
+    if (filasDatos > 0) {
+        if (coincidencias === 0) {
+            rowSinResultados.style.display = "";
+        } else {
+            rowSinResultados.style.display = "none";
+        }
+    }
+}
+</script>
 
 {% endblock %}

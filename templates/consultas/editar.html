@@ -1,74 +1,106 @@
 {% extends 'base.html' %}
 
+{% block title %}Editar Consulta - Gestión Clínica{% endblock %}
+
 {% block content %}
 
-<h2>Editar Consulta</h2>
+<!-- Cabecera de la sección idéntica al módulo de médicos -->
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3">
+        <i class="fa-solid fa-user-pen fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Editar Consulta</h2>
+        <p class="text-muted mb-0">Modifica la información del registro clínico seleccionado.</p>
+    </div>
+</div>
 
-<form method="POST">
+<!-- Tarjeta contenedora del formulario -->
+<div class="card border-0 shadow-sm rounded-3 max-width-form" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <form method="POST">
+            
+            <!-- Campo: Fecha -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Fecha de la Consulta:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </span>
+                    <input type="date" name="fecha" class="form-control border-start-0 ps-0" value="{{ consulta.fecha }}" required>
+                </div>
+            </div>
 
-<label>Fecha:</label>
-<input type="date" name="fecha" value="{{ consulta.fecha }}" required>
+            <!-- Campo: Médico (Select Dinámico) -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Médico Tratante:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </span>
+                    <select name="id_medico" class="form-select border-start-0 ps-0" required>
+                        {% for m in medicos %}
+                        <option value="{{ m.id_medico }}" {% if m.id_medico == consulta.id_medico %}selected{% endif %}>
+                            {{ m.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-<br><br>
+            <!-- Campo: Paciente (Select Dinámico) -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Paciente:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-hospital-user"></i>
+                    </span>
+                    <select name="id_paciente" class="form-select border-start-0 ps-0" required>
+                        {% for p in pacientes %}
+                        <option value="{{ p.id_paciente }}" {% if p.id_paciente == consulta.id_paciente %}selected{% endif %}>
+                            {{ p.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-<label>Diagnóstico:</label>
-<input type="text" name="diagnostico" value="{{ consulta.diagnostico }}" required>
+            <!-- Campo: Diagnóstico -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Diagnóstico:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-notes-medical"></i>
+                    </span>
+                    <input type="text" name="diagnostico" class="form-control border-start-0 ps-0" value="{{ consulta.diagnostico }}" required>
+                </div>
+            </div>
 
-<br><br>
+            <!-- Campo: Tratamiento -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-secondary">Tratamiento Asignado:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-pills"></i>
+                    </span>
+                    <input type="text" name="tratamiento" class="form-control border-start-0 ps-0" value="{{ consulta.tratamiento }}" required>
+                </div>
+            </div>
 
-<label>Tratamiento:</label>
-<input type="text" name="tratamiento" value="{{ consulta.tratamiento }}" required>
+            <!-- Botones de Acción -->
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/consultas" class="btn btn-light px-4 border">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-custom-primary shadow-sm px-4">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>Actualizar
+                </button>
+            </div>
 
-<br><br>
+        </form>
 
-<label>Médico:</label>
-
-<select name="id_medico">
-
-{% for m in medicos %}
-
-<option value="{{m.id_medico}}"
-{% if m.id_medico == consulta.id_medico %}
-selected
-{% endif %}
->
-
-{{m.nombre}}
-
-</option>
-
-{% endfor %}
-
-</select>
-
-<br><br>
-
-<label>Paciente:</label>
-
-<select name="id_paciente">
-
-{% for p in pacientes %}
-
-<option value="{{p.id_paciente}}"
-{% if p.id_paciente == consulta.id_paciente %}
-selected
-{% endif %}
->
-
-{{p.nombre}}
-
-</option>
-
-{% endfor %}
-
-</select>
-
-<br><br>
-
-<button type="submit">
-Actualizar Consulta
-</button>
-
-</form>
+    </div>
+</div>
 
 {% endblock %}

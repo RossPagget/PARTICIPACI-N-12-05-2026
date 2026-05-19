@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Paciente - Gestión Clínica{% endblock %}
+
+{% block content %}
+
+<!-- Cabecera de Advertencia Estilizada -->
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-danger bg-opacity-10 text-danger p-3 rounded-3 me-3">
+        <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Confirmar Eliminación</h2>
+        <p class="text-muted mb-0">Esta acción dará de baja al paciente del sistema de forma permanente.</p>
+    </div>
+</div>
+
+<!-- Tarjeta de confirmación con borde lateral de advertencia -->
+<div class="card border-start border-danger border-4 shadow-sm rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <h5 class="card-title text-dark fw-bold mb-3">Registro seleccionado para eliminación</h5>
+        
+        <!-- Bloque de datos del paciente -->
+        <div class="bg-light p-3 rounded-3 mb-4 border">
+            <div class="row g-2">
+                <div class="col-sm-4 text-muted fw-semibold">ID Paciente:</div>
+                <div class="col-sm-8 fw-bold text-dark">{{ paciente.id_paciente }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Nombre:</div>
+                <div class="col-sm-8 text-dark">{{ paciente.nombre }}</div>
+                
+                <div class="col-sm-4 text-muted fw-semibold">Edad:</div>
+                <div class="col-sm-8 text-dark">{{ paciente.edad }} años</div>
+
+                <div class="col-sm-4 text-muted fw-semibold">Dirección:</div>
+                <div class="col-sm-8 text-muted small">{{ paciente.direccion }}</div>
+            </div>
+        </div>
+
+        <!-- Formulario seguro con confirmación JavaScript -->
+        <form method="POST" onsubmit="return confirm('¿Está segura de que desea eliminar el registro de {{ paciente.nombre }} permanentemente? Esta acción no se puede deshacer.');">
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/pacientes" class="btn btn-light px-4 border">
+                    <i class="fa-solid fa-arrow-left me-2"></i>Regresar a la lista
+                </a>
+                <button type="submit" class="btn btn-danger shadow-sm px-4">
+                    <i class="fa-solid fa-trash-can me-2"></i>Eliminar Registro
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

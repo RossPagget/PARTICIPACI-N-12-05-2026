@@ -2,38 +2,86 @@
 
 {% block content %}
 
-<h2>Consultas Médicas</h2>
+<!-- Cabecera simple y limpia idéntica a la de médicos -->
+<h2 class="mb-4 fw-bold text-dark">Consultas Médicas</h2>
 
-<a href="/consultas/agregar" class="btn">
-Nueva Consulta
-</a>
-
-<br><br>
-
-<table>
-
-<tr>
-<th>Fecha</th>
-<th>Diagnóstico</th>
-<th>Tratamiento</th>
-<th>Médico</th>
-<th>Paciente</th>
-</tr>
-
-{% for c in consultas %}
-
-<tr>
-
-<td>{{ c.fecha }}</td>
-<td>{{ c.diagnostico }}</td>
-<td>{{ c.tratamiento }}</td>
-<td>{{ c.medico.nombre }}</td>
-<td>{{ c.paciente.nombre }}</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
+<!-- Fila de herramientas: Contiene el botón de agregar y el filtro de fechas alineados -->
+<div class="row g-3 align-items-center mb-4">
+    <!-- Botón principal directo -->
+    <div class="col-12 col-md-auto">
+        <a href="/consultas/agregar" class="btn btn-custom-primary shadow-sm w-100">
+            <i class="fa-solid fa-plus me-2"></i>Nueva Consulta
+        </a>
+    </div>
+    
+</div>
+<!-- Contenedor responsivo exacto de tarjeta sin bordes -->
+<div class="table-responsive card border-0 shadow-sm rounded-3">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <!-- Cabecera oscura unificada con la clase table-custom -->
+            <tr class="table-custom text-white">
+                <th class="ps-3">Fecha</th>
+                <th>Médico</th>
+                <th>Paciente</th>
+                <th>Diagnóstico</th>
+                <th>Tratamiento</th>
+                <th class="text-center pe-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in consultas %}
+            <tr>
+                <td class="ps-3 fw-bold text-secondary">
+                    <i class="fa-regular fa-calendar text-muted me-2 small"></i>{{ c.fecha }}
+                </td>
+                <td class="fw-semibold">
+                    <i class="fa-solid fa-user-doctor text-primary opacity-75 me-2 small"></i>{{ c.medico.nombre }}
+                </td>
+                <td>
+                    <i class="fa-solid fa-hospital-user text-success opacity-75 me-2 small"></i>{{ c.paciente.nombre }}
+                </td>
+                <td>
+                    <span class="d-inline-block text-truncate" style="max-width: 200px;" title="{{ c.diagnostico }}">
+                        {{ c.diagnostico }}
+                    </span>
+                </td>
+                <td>
+                    <span class="d-inline-block text-truncate" style="max-width: 200px;" title="{{ c.tratamiento }}">
+                        {{ c.tratamiento }}
+                    </span>
+                </td>
+                <td class="text-center pe-3">
+                    <!-- Grupo de botones idéntico al módulo de médicos con confirmación nativa -->
+                    <div class="btn-group" role="group" aria-label="Acciones de consulta">
+                        <a href="/consultas/editar/{{ c.id_consulta }}" class="btn btn-sm btn-outline-primary px-3">
+                            <i class="fa-solid fa-pen-to-square me-1"></i> Editar
+                        </a>
+                        <!-- Formulario inline para que la eliminación responda directamente al botón -->
+                        <form method="POST" action="/consultas/eliminar/{{ c.id_consulta }}" class="d-inline" onsubmit="return confirm('¿Está segura de que desea eliminar la consulta de {{ c.paciente.nombre }}?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger px-3 border-start-0 rounded-end">
+                                <i class="fa-solid fa-trash me-1"></i> Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <!-- Estado vacío con la estructura de la tabla integrada -->
+            <tr>
+                <td colspan="6" class="text-center text-muted py-5">
+                    <i class="fa-solid fa-folder-open fa-2x mb-2 text-secondary d-block"></i>
+                    <!-- Cambiado de request.args a request.form -->
+                    {% if request.form.get('fecha') %}
+                        No se encontraron consultas para la fecha seleccionada.
+                    {% else %}
+                        No se registran consultas médicas en el sistema.
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

@@ -1,35 +1,83 @@
 {% extends 'base.html' %}
 
+{% block title %}Agregar Paciente - Gestión Clínica{% endblock %}
+
 {% block content %}
 
-<h2>Agregar Paciente</h2>
+<!-- Cabecera de la sección con estilo consistente -->
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3">
+        <i class="fa-solid fa-user-plus fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Agregar Paciente</h2>
+        <p class="text-muted mb-0">Registre un nuevo paciente en el sistema de gestión.</p>
+    </div>
+</div>
 
-<form method="POST">
+<!-- Tarjeta contenedora del formulario -->
+<div class="card border-0 shadow-sm rounded-3" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <form method="POST">
+            
+            <!-- Campo: Nombre -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Nombre Completo:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    <input type="text" name="nombre" class="form-control border-start-0 ps-0" placeholder="Ej. Mariana Espinoza" required>
+                </div>
+            </div>
 
-<label>Nombre:</label>
-<input type="text" name="nombre" required>
+            <!-- Campo: Edad -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Edad:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </span>
+                    <input type="number" name="edad" class="form-control border-start-0 ps-0" placeholder="Ej. 28" min="0" required>
+                </div>
+            </div>
 
-<br><br>
+            <!-- Campo: Dirección -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Dirección de Domicilio:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </span>
+                    <input type="text" name="direccion" class="form-control border-start-0 ps-0" placeholder="Ej. Av. Ballivián #123, Zona Central" required>
+                </div>
+            </div>
 
-<label>Edad:</label>
-<input type="number" name="edad" required>
+            <!-- Campo: Teléfono -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-secondary">Teléfono de Contacto:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-phone"></i>
+                    </span>
+                    <input type="text" name="telefono" class="form-control border-start-0 ps-0" placeholder="Ej. 71234567" required>
+                </div>
+            </div>
 
-<br><br>
+            <!-- Botones de Acción -->
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/pacientes" class="btn btn-light px-4 border">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-custom-primary shadow-sm px-4">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>Guardar
+                </button>
+            </div>
 
-<label>Dirección:</label>
-<input type="text" name="direccion" required>
+        </form>
 
-<br><br>
-
-<label>Teléfono:</label>
-<input type="text" name="telefono" required>
-
-<br><br>
-
-<button type="submit">
-Guardar
-</button>
-
-</form>
+    </div>
+</div>
 
 {% endblock %}

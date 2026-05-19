@@ -1,62 +1,108 @@
 {% extends 'base.html' %}
 
+{% block title %}Nueva Consulta - Gestión Clínica{% endblock %}
+
 {% block content %}
 
-<h2>Nueva Consulta</h2>
+<!-- Cabecera de la sección idéntica al diseño del sistema -->
+<div class="d-flex align-items-center mb-4">
+    <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3 me-3">
+        <i class="fa-solid fa-notes-medical fa-2x"></i>
+    </div>
+    <div>
+        <h2 class="mb-0 fw-bold text-dark">Nueva Consulta</h2>
+        <p class="text-muted mb-0">Registra una nueva atención médica en el sistema.</p>
+    </div>
+</div>
 
-<form method="POST">
+<!-- Tarjeta contenedora del formulario -->
+<div class="card border-0 shadow-sm rounded-3 max-width-form" style="max-width: 600px;">
+    <div class="card-body p-4">
+        
+        <form method="POST">
+            
+            <!-- Campo: Fecha -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Fecha de la Consulta:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </span>
+                    <input type="date" name="fecha" class="form-control border-start-0 ps-0" required>
+                </div>
+            </div>
 
-    <label>Fecha:</label>
-    <input type="date" name="fecha" required>
+            <!-- Campo: Médico -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Médico Tratante:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </span>
+                    <select name="id_medico" class="form-select border-start-0 ps-0" required>
+                        <option value="" selected disabled hidden>Seleccione un médico...</option>
+                        {% for m in medicos %}
+                        <option value="{{ m.id_medico }}">
+                            {{ m.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-    <br><br>
+            <!-- Campo: Paciente -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Paciente:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-hospital-user"></i>
+                    </span>
+                    <select name="id_paciente" class="form-select border-start-0 ps-0" required>
+                        <option value="" selected disabled hidden>Seleccione un paciente...</option>
+                        {% for p in pacientes %}
+                        <option value="{{ p.id_paciente }}">
+                            {{ p.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 
-    <label>Diagnóstico:</label>
-    <input type="text" name="diagnostico" required>
+            <!-- Campo: Diagnóstico -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary">Diagnóstico:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-notes-medical"></i>
+                    </span>
+                    <input type="text" name="diagnostico" class="form-control border-start-0 ps-0" placeholder="Ej. Faringitis aguda" required>
+                </div>
+            </div>
 
-    <br><br>
+            <!-- Campo: Tratamiento -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-secondary">Tratamiento Asignado:</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0">
+                        <i class="fa-solid fa-pills"></i>
+                    </span>
+                    <input type="text" name="tratamiento" class="form-control border-start-0 ps-0" placeholder="Ej. Amoxicilina 500mg cada 8 horas por 7 días" required>
+                </div>
+            </div>
 
-    <label>Tratamiento:</label>
-    <input type="text" name="tratamiento" required>
+            <!-- Botones de Acción -->
+            <div class="d-flex gap-2 justify-content-end">
+                <a href="/consultas" class="btn btn-light px-4 border">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-custom-primary shadow-sm px-4">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>Guardar Consulta
+                </button>
+            </div>
 
-    <br><br>
+        </form>
 
-    <label>Médico:</label>
-
-    <select name="id_medico" required>
-
-        {% for m in medicos %}
-
-        <option value="{{ m.id_medico }}">
-            {{ m.nombre }}
-        </option>
-
-        {% endfor %}
-
-    </select>
-
-    <br><br>
-
-    <label>Paciente:</label>
-
-    <select name="id_paciente" required>
-
-        {% for p in pacientes %}
-
-        <option value="{{ p.id_paciente }}">
-            {{ p.nombre }}
-        </option>
-
-        {% endfor %}
-
-    </select>
-
-    <br><br>
-
-    <button type="submit">
-        Guardar Consulta
-    </button>
-
-</form>
+    </div>
+</div>
 
 {% endblock %}
